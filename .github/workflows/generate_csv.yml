@@ -10,11 +10,11 @@ jobs:
     runs-on: ubuntu-latest  # GitHub provides virtual machines for actions
 
     steps:
-    - name: Checkout repository content
-      uses: actions/checkout@v2  # Checks out your repository
+    - name: git@github.com:niaz86/first.git
+      uses: git@github.com:niaz86/first.git  # Checks out your repository
 
     - name: Set up Python
-      uses: actions/setup-python@v2
+      uses: git@github.com:niaz86/first.git/setup-python@v2
       with:
         python-version: '3.x'  # Set up a Python version
 
