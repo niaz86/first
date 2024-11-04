@@ -11,10 +11,10 @@ jobs:
 
     steps:
     - name: git@github.com:niaz86/first.git
-      uses: git@github.com:niaz86/first.git  # Checks out your repository
+      uses: actions/checkout@v2  # Checks out your repository
 
     - name: Set up Python
-      uses: git@github.com:niaz86/first.git/setup-python@v2
+      uses: actions/setup-python@v2
       with:
         python-version: '3.x'  # Set up a Python version
 
@@ -34,4 +34,4 @@ jobs:
         git commit -m "Automatically add data.csv"
         git push
       env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # GitHub automatically provides a token for commits
+        GITHUB_TOKEN: ${{ secrets.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 }}  # GitHub automatically provides a token for commits
