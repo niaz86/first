@@ -1,9 +1,6 @@
 name: Generate CSV and Commit
 
-
 on:
-  schedule:
-    - cron: '0 0 * * *'  # Runs every day at midnight
   push:
     branches:
       - main  # This workflow runs on push to the main branch
@@ -13,27 +10,28 @@ jobs:
     runs-on: ubuntu-latest  # GitHub provides virtual machines for actions
 
     steps:
-    - name: git@github.com:niaz86/first.git
-      uses: actions/checkout@v2  # Checks out your repository
+    - name: Checkout repository content
+      uses: actions/checkout@v2  # This is the correct action to check out your repository
 
     - name: Set up Python
-      uses: actions/setup-python@v2
+      uses: actions/setup-python@v2  # This is the correct action for setting up Python
       with:
-        python-version: '3.x'  # Set up a Python version
+        python-version: '3.x'  # Specify the Python version you want to use (e.g., 3.8, 3.9)
 
     - name: Install Python dependencies
       run: |
-        pip install pandas  # Install pandas
+        pip install pandas  # Install the required Python libraries
 
     - name: Run Python script
       run: |
         python generate_csv.py  # Run your Python script to generate the CSV
+        ls -la  # List files after the script to ensure 'data.csv' is created
 
     - name: Commit CSV file
       run: |
         git config --global user.name 'github-actions[bot]'
         git config --global user.email 'github-actions[bot]@users.noreply.github.com'
-        git add data.csv
+        git add data.csv  # Add the CSV file if it exists
         git commit -m "Automatically add data.csv"
         git push
       env:
