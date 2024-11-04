@@ -1,0 +1,37 @@
+name: Generate CSV and Commit
+
+on:
+  push:
+    branches:
+      - main  # This workflow runs on push to the main branch
+
+jobs:
+  build:
+    runs-on: ubuntu-latest  # GitHub provides virtual machines for actions
+
+    steps:
+    - name: Checkout repository content
+      uses: actions/checkout@v2  # Checks out your repository
+
+    - name: Set up Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: '3.x'  # Set up a Python version
+
+    - name: Install Python dependencies
+      run: |
+        pip install pandas  # Install pandas
+
+    - name: Run Python script
+      run: |
+        python generate_csv.py  # Run your Python script to generate the CSV
+
+    - name: Commit CSV file
+      run: |
+        git config --global user.name 'github-actions[bot]'
+        git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+        git add data.csv
+        git commit -m "Automatically add data.csv"
+        git push
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # GitHub automatically provides a token for commits
