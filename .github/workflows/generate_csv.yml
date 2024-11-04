@@ -1,6 +1,9 @@
 name: Generate CSV and Commit
 
+
 on:
+  schedule:
+    - cron: '0 0 * * *'  # Runs every day at midnight
   push:
     branches:
       - main  # This workflow runs on push to the main branch
