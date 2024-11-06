@@ -1,0 +1,37 @@
+name: Update CSV every minute
+
+on:
+  schedule:
+    - cron: "*/1 * * * *"  # This cron expression runs the job every minute
+
+jobs:
+  update-csv:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3  # Checks out your repository
+
+    - name: Set up Python
+      uses: actions/setup-python@v4  # Sets up Python environment
+      with:
+        python-version: '3.x'
+
+    - name: Install dependencies
+      run: |
+        pip install -r requirements.txt  # Install the required dependencies
+
+    - name: Run script to update CSV
+      run: |
+        python rate_plot.py  # Run your Python script that updates the CSV file
+
+    - name: Commit and push changes
+      run: |
+        git config --global user.name "GitHub Action"
+        git config --global user.email "action@github.com"
+        git add <Analysis of Gold marketing>.csv
+        git add <Analysis of Silver marketing>.csv # Replace with the path to your CSV file
+        git commit -m "Updated CSV"
+        git push
+      env:
+        GITHUB_TOKEN: ${{ secrets.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 }}  # Uses GitHub's provided token to push changes
