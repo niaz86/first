@@ -32,9 +32,9 @@ jobs:
       run: |
         git config --global user.name "GitHub Action"
         git config --global user.email "action@github.com"
-        git add <Analysis of Gold marketing>.csv
-        git add <Analysis of Silver marketing>.csv # Replace with the path to your CSV file
+        git add "Analysis of Gold marketing.csv"
+        git add "Analysis of Silver marketing.csv"  # Replace with the path to your CSV files
         git commit -m "Updated CSV"
         git push
       env:
-        GITHUB_TOKEN: ${{ secrets.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 }}  # Uses GitHub's provided token to push changes
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Uses GitHub's built-in token to push changes
