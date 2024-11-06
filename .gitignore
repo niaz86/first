@@ -1,3 +1,5 @@
 
 .ssh/first_key
 .ssh/first_key.pub
+/venv
+requirements
