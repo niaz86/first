@@ -3,11 +3,25 @@ name: Update CSV every minute
 on:
   push:
     branches:
-      - [master,main] 
-  schedule:
-    - cron: "*/1 * * * *"  # This cron expression runs the job every minute
+      - main
+    
 
+  workflow_dispatch:  # Manually triggered
 jobs:
+  run-five-times:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Run task every minute for 5 minutes
+        run: |
+          for i in {1..5}; do
+            echo "Run #$i at $(date)"
+            # Replace this with your actual task/command/script
+            # Example: bash your-script.sh
+
+            sleep 60  # Wait for 1 minute before the next iteration
+          done
+
+
   update-csv:
     runs-on: ubuntu-latest
 
@@ -24,17 +38,16 @@ jobs:
       run: |
         pip install -r requirements.txt  # Install the required dependencies
 
-    - name: Run script to update CSV
-      run: |
-        python rate_plot.py  # Run your Python script that updates the CSV file
-
-    - name: Commit and push changes
-      run: |
-        git config --global user.name "GitHub Action"
-        git config --global user.email "action@github.com"
-        git add "Analysis of Gold marketing.csv"
-        git add "Analysis of Silver marketing.csv"  # Replace with the path to your CSV files
-        git commit -m "Updated CSV"
-        git push
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Uses GitHub's built-in token to push changes
+    - 
+      # Run your Python script
+    - name: Run Python script
+      run: python rate_plot.py  # Replace with the path to your Python script
+  
+      # Upload CSV files (optional, if you need to save them as artifacts)
+    - name: Upload CSV files
+      uses: actions/upload-artifact@v3
+      with:
+        name: gold-silver-analysis
+        path: |
+          Analysis\ of\ Gold\ marketing.csv
+          Analysis\ of\ Silver\ marketing.csv
