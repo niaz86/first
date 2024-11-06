@@ -25,7 +25,7 @@ jobs:
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
-        python -m pip install requests lxml pandas 
+        python -m pip install requests lxml pandas datetime
 
     # Run your Python script
     - name: Run Python script
@@ -37,5 +37,5 @@ jobs:
       with:
         name: gold-silver-analysis
         path: |
-          git@github.com:niaz86/first.git\Analysis\ of\ Gold\ marketing.csv
-          git@github.com:niaz86/first.git\Analysis\ of\ Silver\ marketing.csv
+          Analysis of Gold marketing.csv
+          Analysis of Silver marketing.csv
