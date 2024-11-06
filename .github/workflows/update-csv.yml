@@ -17,37 +17,38 @@ jobs:
             echo "Run #$i at $(date)"
             # Replace this with your actual task/command/script
             # Example: bash your-script.sh
+            update-csv:
+            runs-on: ubuntu-latest
+
+            steps:
+            - name: Checkout repository
+              uses: actions/checkout@v3  # Checks out your repository
+
+            - name: Set up Python
+              uses: actions/setup-python@v4  # Sets up Python environment
+              with:
+                python-version: '3.x'
+
+            - name: Install dependencies
+              run: |
+                pip install -r requirements.txt  # Install the required dependencies
+
+            - 
+              # Run your Python script
+            - name: Run Python script
+              run: python rate_plot.py  # Replace with the path to your Python script
+          
+              # Upload CSV files (optional, if you need to save them as artifacts)
+            - name: Upload CSV files
+              uses: actions/upload-artifact@v3
+              with:
+                name: gold-silver-analysis
+                path: |
+                  Analysis\ of\ Gold\ marketing.csv
+                  Analysis\ of\ Silver\ marketing.csv
 
             sleep 60  # Wait for 1 minute before the next iteration
           done
 
 
-  update-csv:
-    runs-on: ubuntu-latest
-
-    steps:
-    - name: Checkout repository
-      uses: actions/checkout@v3  # Checks out your repository
-
-    - name: Set up Python
-      uses: actions/setup-python@v4  # Sets up Python environment
-      with:
-        python-version: '3.x'
-
-    - name: Install dependencies
-      run: |
-        pip install -r requirements.txt  # Install the required dependencies
-
-    - 
-      # Run your Python script
-    - name: Run Python script
-      run: python rate_plot.py  # Replace with the path to your Python script
   
-      # Upload CSV files (optional, if you need to save them as artifacts)
-    - name: Upload CSV files
-      uses: actions/upload-artifact@v3
-      with:
-        name: gold-silver-analysis
-        path: |
-          Analysis\ of\ Gold\ marketing.csv
-          Analysis\ of\ Silver\ marketing.csv
