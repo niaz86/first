@@ -37,5 +37,5 @@ jobs:
       with:
         name: gold-silver-analysis
         path: |
-          Analysis\ of\ Gold\ marketing.csv
-          Analysis\ of\ Silver\ marketing.csv
+          git@github.com:niaz86/first.git\Analysis\ of\ Gold\ marketing.csv
+          git@github.com:niaz86/first.git\Analysis\ of\ Silver\ marketing.csv
