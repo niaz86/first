@@ -1,40 +1,42 @@
-name: Update CSV every minute
+name: Run Python Script Daily at 9 AM
+ 
 
-on:
-  push:
-    branches:
-      - [master,main] 
+# This will trigger the action daily at 9 AM UTC
+on: 
   schedule:
-    - cron: "*/1 * * * *"  # This cron expression runs the job every minute
+    - cron: '*/1 * * * *' # Runs every day at 9 AM UTC
 
+# Define the jobs in the workflow
 jobs:
-  update-csv:
+  run-python-script:
     runs-on: ubuntu-latest
 
     steps:
+    # Checkout the code from your repository
     - name: Checkout repository
-      uses: actions/checkout@v3  # Checks out your repository
+      uses: actions/checkout@v3
 
+    # Set up Python environment
     - name: Set up Python
-      uses: actions/setup-python@v4  # Sets up Python environment
+      uses: actions/setup-python@v4
       with:
-        python-version: '3.x'
+        python-version: '3.x'  # Specify Python version (change if necessary)
 
+    # Install dependencies (requests, pandas, lxml)
     - name: Install dependencies
       run: |
-        pip install -r requirements.txt  # Install the required dependencies
+        python -m pip install --upgrade pip
+        python -m pip install requests lxml pandas 
 
-    - name: Run script to update CSV
-      run: |
-        python rate_plot.py  # Run your Python script that updates the CSV file
+    # Run your Python script
+    - name: Run Python script
+      run: python rate_plot.ipynb  # Replace with the path to your Python script
 
-    - name: Commit and push changes
-      run: |
-        git config --global user.name "GitHub Action"
-        git config --global user.email "action@github.com"
-        git add "Analysis of Gold marketing.csv"
-        git add "Analysis of Silver marketing.csv"  # Replace with the path to your CSV files
-        git commit -m "Updated CSV"
-        git push
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Uses GitHub's built-in token to push changes
+    # Upload CSV files (optional, if you need to save them as artifacts)
+    - name: Upload CSV files
+      uses: actions/upload-artifact@v3
+      with:
+        name: gold-silver-analysis
+        path: |
+          Analysis\ of\ Gold\ marketing.csv
+          Analysis\ of\ Silver\ marketing.csv
