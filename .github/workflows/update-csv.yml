@@ -21,11 +21,12 @@ jobs:
       with:
         python-version: '3.x'  # Specify Python version (change if necessary)
 
-    # Install dependencies (requests, pandas, lxml)
+    # Install dependencies (requests, lxml, pandas, datetime)
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
         python -m pip install requests lxml pandas datetime
+
 
     # Run your Python script
     - name: Run Python script
