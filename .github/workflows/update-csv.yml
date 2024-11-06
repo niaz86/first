@@ -1,6 +1,9 @@
 name: Update CSV every minute
 
 on:
+   push:
+    branches:
+      - main 
   schedule:
     - cron: "*/1 * * * *"  # This cron expression runs the job every minute
 
