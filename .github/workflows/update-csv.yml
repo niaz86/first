@@ -37,8 +37,8 @@ jobs:
       with:
         name: gold-silver-analysis
         path: |
-          Analysis of Gold marketing.csv
-          Analysis of Silver marketing.csv
+          \Analysis\ of\ Gold\ marketing.csv
+          \Analysis\ of\ Silver\ marketing.csv
     - name: Commit changes and push
       run: |
         git config --global user.name "GitHub Actions"
