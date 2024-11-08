@@ -4,9 +4,10 @@ name: Run Python Script Daily at 9 AM
 # This will trigger the action daily at 9 AM UTC
 on: 
   schedule:
-    - cron: '50-59 3 * * *'
+      - cron: '43 13 * * *'
+    # - cron: '50-59 3 * * *'
     # Also include minute 0 of 10 AM UTC
-    - cron: '0 4 * * *'
+    # - cron: '0 4 * * *'
   workflow_dispatch:  
 
 # Define the jobs in the workflow
