@@ -4,7 +4,9 @@ name: Run Python Script Daily at 9 AM
 # This will trigger the action daily at 9 AM UTC
 on: 
   schedule:
-    - cron: '0 9 * * *'  # Runs every day at 9 AM UTC
+    - cron: '50-59 9 * * *'
+    # Also include minute 0 of 10 AM UTC
+    - cron: '0 10 * * *'
   workflow_dispatch:  
 
 # Define the jobs in the workflow
@@ -41,10 +43,29 @@ jobs:
         path: |
           Analysis\ of\ Gold\ marketing.csv
           Analysis\ of\ Silver\ marketing.csv
-    - name: Commit changes and push
+          
+    
+    - name: Commit and push changes
       run: |
-        git config --global user.name "GitHub Actions"
-        git config --global user.email "actions@github.com"
-        git add data/myfile.csv
-        git commit -m "Update CSV with new scraped data"
-        git push origin main 
+        git config --global user.name 'github-actions[bot]'
+        git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+        
+        # Check if there are any changes
+        git add ./*.csv
+        if git diff-index --quiet HEAD; then
+          echo "No changes in CSV files. Exiting..."
+          exit 0
+        fi
+
+        git commit -m "Update CSV file(s)"
+        git push
+    - name: Upload Analysis Results
+      uses: actions/upload-artifact@v4
+      with:
+        name: gold-silver-analysis
+        path: ./gold-silver-analysis.csv  # Replace with your actual path
+      
+
+      env:
+        # GitHub token to authenticate the push operation
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}    
